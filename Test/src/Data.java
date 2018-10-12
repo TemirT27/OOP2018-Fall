@@ -1,33 +1,27 @@
-public class Data {
-    private double Average;
-    private double Maximum;
-    private int Div_val;
-    public int Re;
+public class Data{
+    private int n;
+    private double max = -999999.0;
+    private double average = 0;
+    private double cnt = 0;
+    private double elements = 0;
 
-    Data(){
-        Average = 0;
-        Maximum = 0;
-        Div_val = 0;
-        Re = 0;
+    public Data(){};
+
+    public void SetValue(int n){
+        this.n = n;
+        cnt = cnt+ this.n;
+        this.elements++;
+        if(this.n>this.max) this.max = this.n;
+        this.average = cnt / elements;
     }
 
-    void Add(int value){
-        if(Re == 0){
-            Maximum = value;
-            Re++;
-        }
-        Average+=value;
-        Div_val++;
-        if(value > Maximum){
-            Maximum = value;
-        }
+    public double GetMax(){
+
+        return this.max;
     }
 
-    double get_max(){
-        return Maximum;
+    public double GetAverage(){
+        return this.average;
     }
 
-    double get_average(){
-        return (Average/(Div_val*1.0));
-    }
 }

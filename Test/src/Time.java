@@ -1,141 +1,85 @@
 public class Time {
-    int hour;
-    int minute;
-    int second;
-    Time(int hour,int minute,int second){
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
-        boolean check = false;
-        if(minute>=0 && minute<60 && hour>=0 && hour<24 && second>=0 && second<60){
-            check = true;
-        }
-        else{
-            System.out.println("Not correct format, try again");
-            System.exit(0);
-        }
+
+    public int hour;
+    public int minut;
+    public int second;
+
+    public Time(int hour, int minut, int second){
+        this.hour = hour%24;
+        this.minut = minut % 60;
+        this.second = second % 60;
     }
-    String toUniversal(){
+
+    public String ToUniversal(){
+        String sminut = "";
+        String shour = "";
+        String ssecond = "";
+        if(this.minut<10) sminut = "0" + this.minut;
+        else sminut = this.minut + "";
+
+        if(this.hour<10) shour = "0" + this.hour;
+        else shour = this.hour + "";
+
+        if(this.second<10) ssecond = "0" + this.second;
+        else ssecond = this.second + "";
+
+        return (shour + ":" + sminut + ":" + ssecond);
+    }
+
+
+    public String ToStandart(){
+
         String s = "";
-        if(hour < 10){
-            s+="0"+Integer.toString(hour)+ ":" ;
-        }
-        else{
-            s+=Integer.toString(hour)+ ":" ;
-        }
-        if(minute<10){
-            s+="0"+Integer.toString(minute)+ ":" ;
-        }
-        else{
-            s+=Integer.toString(minute)+ ":" ;
-        }
-        if(second<10){
-            s+="0"+Integer.toString(second);
-        }
-        else{
-            s+=Integer.toString(second) ;
-        }
-        return s;
-    }
-    String toStandard()
-    {
-        String s="";
-        if(hour>=12 && minute>0 && hour<=23)
-        {
+        String m = "";
 
-            s+=Integer.toString(hour-12)+":";
-            if(minute<10)
-            {
-                s+="0"+Integer.toString(minute)+":";
-            }
-            else
-            {
-                s+=Integer.toString(minute)+":";
-            }
-            if(second<10)
-            {
-                s+="0"+Integer.toString(second)+" PM";
-            }
-            else
-            {
-                s+=Integer.toString(second)+" PM";
-            }
+        if(this.hour==0){
+            s = "12";
+            m = "PM";
+        }else if(this.hour>=1 && this.hour<=12){
+            s = this.hour + "";
+            m = "AM";
+        }else {
+            s = this.hour % 12 + "";
+            m = "PM";
         }
-        else
-        {
-            if(hour==24)
-            {
-                s+="00:";
-            }
-            else
-            {
-                s+=Integer.toString(hour)+":";
-            }
 
 
-            if(minute<10)
-            {
-                s+="0"+Integer.toString(minute)+":";
-            }
-            else
-            {
-                s+=Integer.toString(minute)+":";
-            }
-            if(second<10)
-            {
-                s+="0"+Integer.toString(second)+" AM";
-            }
-            else
-            {
-                s+=Integer.toString(second)+" AM";
-            }
+        String sminut = "";
+        String shour = "";
+        String ssecond = "";
+        if(this.minut<10) sminut = "0" + this.minut;
+        else sminut = this.minut + "";
 
-        }
-        return s;
+        if(this.hour<10) shour = "0" + this.hour;
+        else shour = this.hour + "";
 
+        if(this.second<10) ssecond = "0" + this.second;
+        else ssecond = this.second + "";
+
+
+        return s + ":" + sminut + ":" + ssecond + m;
 
     }
-    String add(Time x)
-    {
-        int total=(x.hour*3600+x.minute*60+x.second)+(hour*3600+minute*60+second);
-        String s="";
-        if((total/3600)%24<10)
-        {
 
-            s+="0"+Integer.toString((total/(3600))%24)+":";
-        }
-        else
-        {
-            s+=Integer.toString(total/(3600)%24)+":";
-        }
+    public void TAdd(Time t2){
+        int res = this.hour *3600 + this.minut * 60 + this.second + t2.hour *3600 + t2.minut * 60 + t2.second ;
+        res = res % 86400;
+        this.hour = res / 3600;
+        this.minut = (res % 3600)/60;
+        this.second = res % 60;
 
-        if((total%3600)/60<10)
-        {
-            s+="0"+Integer.toString((total%(3600))/60)+":";
-        }
-        else
-        {
-            s+=Integer.toString((total%(3600))/60)+":";
-        }
-
-        if((total%3600)%60<10)
-        {
-            s+="0"+Integer.toString((total%(3600))%60);
-        }
-        else
-        {
-            s+=Integer.toString((total%(3600))%60);
-        }
-
-        return s;
     }
 
-    public static void main(String[] args) {
+    public static void main(String args[]){
 
-        Time t=new Time(23,5,6);
-        System.out.println(t.toUniversal());
-        System.out.println(t.toStandard());
-        Time t2=new Time(4,24,33);
-        System.out.println(t.add(t2));
+        Time t = new Time(23, 5, 6);
+        System.out.println(t.ToUniversal());
+        System.out.println(t.ToStandart());
+        Time t2 = new Time(4, 24, 33);
+        t.TAdd(t2);
+
+
+
+
     }
 }

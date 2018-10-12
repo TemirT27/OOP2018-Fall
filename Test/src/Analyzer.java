@@ -1,22 +1,26 @@
 import java.util.Scanner;
 
-public class Analyzer {
+public class Analyzer{
     public static void main(String args[]){
-        Data store = new Data();
         Scanner scan = new Scanner(System.in);
-        Boolean in = true;
-        while (in){
-            System.out.println("Enter number (Q to quit): ");
-            String s = scan.next();
-            if(s.charAt(0)=='Q'){
-                System.out.println(store.get_average());
-                System.out.println(store.get_max());
-                in = false;
-            }
+        Data a = new Data();
+
+
+        String s;
+        int n;
+
+        while (true) {
+            s = scan.next();
+            if(s.equals("Q")) break;
             else{
-                int value = Integer.parseInt(s);
-                store.Add(value);
+                n = Integer.parseInt(s);
+                a.SetValue(n);
             }
         }
+
+        System.out.println("Average = " + a.GetAverage());
+        System.out.println("Maximum = " + a.GetMax());
+
+
     }
 }
